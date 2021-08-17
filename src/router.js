@@ -17,49 +17,50 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
     mode: "history",
+    duplicateNavigationPolicy: 'ignore',
     routes: [{
-        path: "/",
+        path: "/home",
         name: "Home",
         component: Home,
     },
     {
-        path: "/Search",
+        path: "/search",
         name: "Search",
         component: Search,
     },
     {
-        path: "/Mark_list",
+        path: "/mark_list",
         name: "Mark_list",
         component: Mark_list,
     },
     {
-        path: "/Open_list",
+        path: "/open_list",
         name: "Open_list",
         component: Open_list,
     },
     {
-        path: "/Park_info",
+        path: "/park_info",
         name: "Park_info",
         component: Park_info,
     },
     {
-        path: "/Review",
+        path: "/review",
         name: "Review",
         component: Review
     },
     {
-        path: "/More",
+        path: "/more",
         name: "More",
         component: More
     },
     {
-        path: "/Location",
+        path: "/location",
         name: "Location",
         component: Location,
 
     },
     {
-        path: "/Sample",
+        path: "/sample",
         name: "Sample",
         component: Sample
     },

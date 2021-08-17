@@ -8,7 +8,7 @@
             src="@/assets/배경.jpeg">
 
             <!-- 공원모아 로고 -->
-            <a bind:="bind:" href="http://localhost:8080/">
+            <a bind:="bind:" href="http://localhost:8080/home">
                 <v-img
                     alt="Logo"
                     class="shrink mr-2"

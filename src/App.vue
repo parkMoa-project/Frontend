@@ -1,8 +1,8 @@
 <template>
   <v-app id="app">
     <!-- v-bind:하위컴포넌트 속성명="상위 컴포넌트 전달할 데이터명"  -->
-    <v-content id="content" class="content" v-bind:propsdata="Search">
-      <router-view></router-view>
+    <v-content id="content" class="content">
+      <router-view :key="$route.fullPath"></router-view>
     </v-content>
     <Footer />
   </v-app>
@@ -15,12 +15,6 @@ import Footer from "./components/layout/Footer.vue";
 let url = "http://20.194.30.72:8000/parkmoa/"; // 장고 drf 서버 주소
 
 export default {
-  data: () => {
-    return {
-      Search: [],
-    };
-  },
-
   name: "App",
   components: {
     Footer: Footer,
@@ -32,16 +26,6 @@ export default {
       method: "GET",
       url: url,
     })
-      .then((response) => {
-        this.Search = response.data;
-      })
-      .catch((response) => {
-        console.log("Failed", response);
-      });
-  },
-  methods: {
-    // CRUD 로직
-    Search: function () {},
   },
 };
 </script>

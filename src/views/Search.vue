@@ -3,6 +3,19 @@
     <HeaderBar />
     <Sort />
 
+    <!-- 검색결과 개수 -->
+    <v-row no-gutters>
+      <v-col cols="7">
+        <p v-if="page === 1" class="caption mt-2">
+          검색결과 {{ $store.getters.parks.length.toLocaleString("ko-KR") }}개
+        </p>
+        <p v-else class="caption mt-2">
+          검색결과 {{ $store.getters.parks.length.toLocaleString("ko-KR") }}개
+          중 {{ page }}페이지
+        </p>
+      </v-col>
+    </v-row>
+
     <!--v-card 넣을지 뺄지 고민 -->
     <v-container fluid class="mx-auto mt-0" max-width="full">
       <v-card-text class="py-1">
@@ -13,7 +26,7 @@
 
       <v-list three-line="three-line">
         <v-list-item
-          v-for="(item, i) in searching"
+          v-for="(item, i) in calData"
           :key="i"
           ripple="ripple"
           @click="() => {}"
@@ -53,6 +66,16 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+
+      <!-- 페이지 번호 -->
+      <div class="text-center">
+        <v-pagination
+          color="#558B2F"
+          v-model="page"
+          :length="numOfPages"
+          :total-visible="7"
+        ></v-pagination>
+      </div>
     </v-container>
   </div>
 </template>
@@ -66,81 +89,31 @@ export default {
     HeaderBar: HeaderBar,
     Sort: Sort,
   },
-
   data: () => ({
-    items: [
-      {
-        image:
-          "https://cdn-images-1.medium.com/max/1024/1*9C9hLji68wV373tk8okLYA.jpeg",
-        parkname: "응봉공원",
-        address: "서울특별시 성동구 금호동 1가 산1-72",
-        ratings: "★★★★☆ 4.0",
-        distance: "여기서부터 7.3km",
-        keyword: "??",
-      },
-      {
-        image:
-          "https://cdn-images-1.medium.com/max/1024/1*BBNtYUieAqHoXKjiJ2mMjQ.png",
-        parkname: "서울숲체육공원",
-        address: "서울성동구 성수동 1가",
-        ratings: "★★★★☆ 3.7",
-        distance: "여기서부터 4km",
-        keyword: "Phones",
-      },
-      {
-        image:
-          "https://cdn-images-1.medium.com/max/1024/1*rTEtei1UEmNqbq6evRsExw.jpeg",
-        parkname: "살곶이체육공원",
-        address: "서울 성동구 성수동 1가",
-        ratings: "★★★☆☆ 3.0",
-        distance: "여기서부터 5.8km",
-        keyword: "Social",
-      },
-      {
-        image:
-          "https://cdn-images-1.medium.com/max/1024/1*FD2nkJewVeQnGf0ommQfrw.jpeg",
-        parkname: "Technology",
-        address:
-          "The Pitfalls Of Outsourcing Self-Awareness To Artificial Intelligence",
-        ratings: "별점",
-        distance: "??",
-        keyword: "Military",
-      },
-      {
-        image:
-          "https://cdn-images-1.medium.com/max/1024/1*eogFpsVgNzXQLCVgFzT_-A.jpeg",
-        parkname: "Travel",
-        address: "Degrees of Freedom and Sudoko",
-        ratings: "별점",
-        distance: "??",
-        keyword: "Social",
-      },
-    ],
-    search: "",
+    page: 1,
+    dataPerPage: 10,
   }),
-
   computed: {
+    startOffset() {
+      return (this.page - 1) * this.dataPerPage;
+    },
+    endOffset() {
+      return this.startOffset + this.dataPerPage;
+    },
+    numOfPages() {
+      console.log(this.$store.getters.parks.length);
+      return Math.ceil(this.$store.getters.parks.length / this.dataPerPage);
+    },
+    calData() {
+      return this.$store.getters.parks.slice(this.startOffset, this.endOffset);
+    },
     keywords() {
       if (!this.search) return [];
-
       const keywords = [];
-
-      for (const search of this.searching) {
+      for (const search of this.calData) {
         keywords.push(search.keyword);
       }
-
       return keywords;
-    },
-    searching() {
-      if (!this.search) return this.items;
-
-      const search = this.search.toLowerCase();
-
-      return this.items.filter((item) => {
-        const text = item.title.toLowerCase();
-
-        return text.indexOf(search) > -1;
-      });
     },
   },
 };

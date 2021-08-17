@@ -1,18 +1,16 @@
 <template>
-
 <!-- Home.vue & Search.vue 화면에 들어가야 함 -->
 
 <div class="HeaderBar">
   <!-- 배경이미지 -->
-  <v-toolbar
-    dark
+  <v-toolbar class="toolbarImage"
     prominent
     height="250px"
     src="@/assets/배경2.jpeg"
   >
   
   <!-- 공원모아 로고 -->
-  <a bind: href="http://localhost:8080/"> 
+  <a bind: href="http://localhost:8080/home"> 
   <v-img
     alt="Logo"
     class="shrink mr-2"
@@ -56,9 +54,9 @@
           type="text"
           class="search-txt"
           name=""
-          placeholder="#를 이용해 검색해보세요"
+          placeholder="#"
         />
-        <a class="search-btn" href="http://localhost:8080/Search">
+        <a class="search-btn" @click="getinfo()">
           <i class="fas fa-search"></i>
         </a>
       </div>
@@ -72,27 +70,83 @@
       class="ma-2" 
       color="#212121" 
       dark
-      href="http://localhost:8080/location">
+      @click="getLocation()">
       <v-icon dark color="#E64A19">mdi-antenna</v-icon>
     <!-- 바 -->
     <v-card
       class="d-flex pa-0"
       outlined
       tile>
-      <div>사용자 위치 주소: 서울특별시 00구 00동</div>
+      <div>좌표로 주소가져오기</div>
     </v-card>
     </v-btn>
   </div>
 
   </v-toolbar>
 </div>
-
 </template>
+ 
 
 
-
+<!-- 사용자 위치 가져오기 -->
 <script>
+import {mapActions} from "vuex";
+
+export default {
+  data() {
+    return {
+      inputText: "",
+      latitude: "",
+      longitude: "",
+      curPosition: ""
+      }
+    },
+  mounted() {
+    this.geolocation = navigator.geolocation.getCurrentPosition((position) => {
+    console.log(position.coords.latitude + ", " + position.coords.longitude)
+    this.latitude = position.coords.latitude
+    this.longitude = position.coords.longitude
+    this.curPosition = "사용자 위치 주소: " + String(this.latitude) + ", " + String(this.longitude)
+    })
+  },
+  computed: {
+    getLocation() {
+      return navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude //위도
+        this.longitude = position.coords.longitude //경도
+        this.curPosition = "사용자 위치 주소" + String(this.latitude) + ", " + String(this.longitude)
+      })
+    }
+  },
+  methods: {
+    ...mapActions(["getinfo"]),
+    updateInput: function (e) {
+      var updatedText = e.target.value
+      this.inputText = updatedText
+    }
+  }
+}
+  
+//   if (navigator.geolocation) {
+    
+//     // GeoLocation을 사용 가능 할 때
+//     navigator.geolocation.getCurrentPosition(function(position) {
+        
+//         var lat = position.coords.latitude, // 위도
+//             lon = position.coords.longitude; // 경도
+//             curPosition = "사용자 위치 주소" + String(lat) + ", " + String(lon)
+        
+//       });
+    
+// } else { // GeoLocation을 사용 할 수 없을때
+    
+//     var lat = 37.566361 // 서울시청 위도
+//         lon = 126.977944 // 서울시청 경도
+//         curPosition = "사용자 위치 주소" + String(lat) + ", " + String(lon)
+//         message = 'geolocation을 사용할수 없어요..'
+//         }
 </script>
+
 
 
 
@@ -158,4 +212,4 @@ a {
   left: 50%;
   transform: translate(-50%, -20%);
 }
-</style>
+</style>s
