@@ -32,7 +32,7 @@ export default new Vuex.Store({
           address: "",
           ratings: "★★★★☆ 4.0",
           distance: "여기서부터 7.2km",
-          keyword: ""
+          keyword: "",
         }
         park.image = item._source.Image
         park.parkname = item._source.Park_name
@@ -40,6 +40,8 @@ export default new Vuex.Store({
         // park.ratings = item._source.Grade    
         // park.distance = 
         park.keyword = item._source.Keyword
+        park.latitude = item._source.Latitude
+        park.longitude = item._source.Longitude
         state.parks.push(park)
       }
     }

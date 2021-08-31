@@ -7,74 +7,57 @@
     <v-row no-gutters>
       <v-col cols="7">
         <p v-if="page === 1" class="caption mt-2">
-          검색결과 {{ $store.getters.parks.length.toLocaleString("ko-KR") }}개
+          {{updateInput}}로 입력한 검색결과 {{ $store.getters.parks.length.toLocaleString("ko-KR") }}개
         </p>
-        <p v-else class="caption mt-2">
-          검색결과 {{ $store.getters.parks.length.toLocaleString("ko-KR") }}개
+        <p v-else class="caption mt-2" >
+          {{updateInput}}로 입력한 검색결과 {{ $store.getters.parks.length.toLocaleString("ko-KR") }}개
           중 {{ page }}페이지
         </p>
       </v-col>
     </v-row>
 
-    <!--v-card 넣을지 뺄지 고민 -->
-    <v-container fluid class="mx-auto mt-0" max-width="full">
-      <v-card-text class="py-1">
-        <v-chip v-for="(keyword, i) in keywords" :key="i" class="mr-2">
-          {{ keyword }}
-        </v-chip>
-      </v-card-text>
-
-      <v-list three-line="three-line">
-        <v-list-item
-          v-for="(item, i) in calData"
-          :key="i"
-          ripple="ripple"
-          @click="() => {}"
-        >
-          <!--사진 위 하트북마크 ok / 즐찾 안하면 빈 하트, 즐찾 하면 꽉 찬 하트 ?? / 꽉 찬 하트 Mark_list로 보내기 / 하트 색상
-                    가현이랑 얘기하고 바꾸기 -->
-          <v-item v-slot:default="{ active, toggle }">
-            <v-img
-              class="mr-4"
-              aspect-ratio="1.5"
-              :src="item.image"
-              max-width="250"
-              min-width="250"
-              @click="toggle"
-            >
-              <v-btn icon="icon" color="#E57373">
-                <v-icon>
-                  {{ active ? "mdi-heart-outline" : "mdi-heart" }}
+    <!--검색결과 list -->
+    <v-container class="mx-auto mt-0" max-width="full"> 
+      <v-list>        
+        <v-list-item class="my-2" v-for="(item, i) in calData" :key="i" ripple="ripple" @click="() => {}">
+          <!--북마크 하트 아이콘 -->
+          <v-item-group>
+            <v-item v-slot="{ active, toggle }">
+              <v-btn class="mr-3" icon dark color="#E57373">
+                <v-icon @click="toggle">
+                  {{ active ? 'mdi-heart' : 'mdi-heart-outline' }}
                 </v-icon>
               </v-btn>
-            </v-img>
-          </v-item>
-
-          <!-- span 사이 font-weight-bold 왜 변경 안 되냐 ok / ratings 생각해봤는데 여기엔 그냥 데이터로 넣고 키워드,
-                    별점 (후기) 쓰는 팝업에서 ratings ui 넣어야 되는거 아닌지 물어보기 / 사진-글 사이 간격 띄우기 & 글 사이 간격 줄이기 /
-                    text-uppercase는 모든 글자를 대문자로 바꾼다는 뜻 (노션에 옮겨쓰고 지우기) -->
-          <v-list-item-content>
-            <h3
-              class="d-flex font-weight-bold"
-              v-text="item.parkname"
-              style="color: #1a237e"
-            ></h3>
-
-            <div v-text="item.address"></div>
-            <div v-text="item.ratings"></div>
-            <div v-text="item.distance" style="color: #bdbdbd"></div>
-          </v-list-item-content>
-        </v-list-item>
+            </v-item>
+          </v-item-group>
+            
+          <!-- 공원 정보 : 사진,이름,주소,별점,거리순 -->
+          <v-img aspect-ratio="1.5" :src="item.image" max-width="300" min-width="300"></v-img>
+              
+            
+          <v-row>
+            <v-col cols="12" class="ml-6 mb-6">
+              <h3 class="d-flex font-weight-bold" v-text="item.parkname" style="color: #1a237e"></h3>
+            </v-col>
+            <v-col cols="12" class="ml-6 py-1 d-flex justify-start">
+              <div v-text="item.address"></div>
+            </v-col>
+            <v-col cols="12" class="ml-6 py-1 d-flex justify-start">
+              <div v-text="item.ratings"></div>
+            </v-col>
+            <v-col cols="12" class="ml-6 mb-7 py-1 d-flex justify-start">
+              <div v-text="item.distance" style="color: #bdbdbd"></div>
+            </v-col>
+          </v-row>
+           
+          </v-list-item>
+      
       </v-list>
+      
 
       <!-- 페이지 번호 -->
       <div class="text-center">
-        <v-pagination
-          color="#558B2F"
-          v-model="page"
-          :length="numOfPages"
-          :total-visible="7"
-        ></v-pagination>
+        <v-pagination color="#558B2F" v-model="page" :length="numOfPages" :total-visible="7"></v-pagination>
       </div>
     </v-container>
   </div>
@@ -89,10 +72,13 @@ export default {
     HeaderBar: HeaderBar,
     Sort: Sort,
   },
-  data: () => ({
+  data() {
+   return {
     page: 1,
     dataPerPage: 10,
-  }),
+    updateInput: "'검색어'",
+   }
+  },
   computed: {
     startOffset() {
       return (this.page - 1) * this.dataPerPage;
@@ -107,14 +93,12 @@ export default {
     calData() {
       return this.$store.getters.parks.slice(this.startOffset, this.endOffset);
     },
-    keywords() {
-      if (!this.search) return [];
-      const keywords = [];
-      for (const search of this.calData) {
-        keywords.push(search.keyword);
-      }
-      return keywords;
-    },
   },
-};
+   
+    
+
+}
 </script>
+
+<style>
+</style>

@@ -3,7 +3,7 @@
 
 <div class="HeaderBar">
   <!-- 배경이미지 -->
-  <v-toolbar class="toolbarImage"
+  <v-toolbar flat class="toolbarImage"
     prominent
     height="250px"
     src="@/assets/배경2.jpeg"
@@ -50,16 +50,18 @@
     </head>
     <body>
       <div class="search-box">
-        <input
+          <input
+          v-bind:value="inputText"
+          v-on:input="updateInput"
           type="text"
           class="search-txt"
           name=""
-          placeholder="#"
-        />
-        <a class="search-btn" @click="getinfo()">
-          <i class="fas fa-search"></i>
-        </a>
-      </div>
+          placeholder="#" />
+
+          <a class="search-btn" @click="getinfo(inputText)">
+            <i class="fas fa-search"></i>
+          </a>
+        </div>
     </body>
   </template>
     
@@ -77,12 +79,12 @@
       class="d-flex pa-0"
       outlined
       tile>
-      <div>좌표로 주소가져오기</div>
+      <div>{{ curPosition }}</div>
     </v-card>
     </v-btn>
   </div>
 
-  </v-toolbar>
+  </v-toolbar> 
 </div>
 </template>
  
@@ -212,4 +214,4 @@ a {
   left: 50%;
   transform: translate(-50%, -20%);
 }
-</style>s
+</style>

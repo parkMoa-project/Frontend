@@ -42,7 +42,7 @@ export default {
   },
 };
 
-let getinfo =[]; //문제점! getinfo 는 search 검색 결과로 나온 공원 위도,경도 정보들 불러와야 함.
+var getinfo =[]; //문제점! getinfo 는 search 검색 결과로 나온 공원 위도,경도 정보들 불러와야 함.
 
 //사용자 위치 동의 불러와서 -> for문 돌리기
 navigator.geolocation.getCurrentPosition((position) => {

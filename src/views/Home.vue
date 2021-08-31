@@ -1,5 +1,8 @@
 <template>
   <div>
+    <header>
+      <title>d</title>
+    </header>
     <HeaderBar />
     <v-container class="hash_tags">
       <a class="산책" @click="getinfo('산책')"><span>#산책</span></a>

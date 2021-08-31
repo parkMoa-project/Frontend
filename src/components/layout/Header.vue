@@ -1,7 +1,8 @@
 <template>
-    <div class="Header">
-        <!-- 배경이미지 -->
+  <div class="Header">
+      <!-- 배경이미지 -->
         <v-toolbar
+            flat
             dark="dark"
             prominent="prominent"
             height="150px"
