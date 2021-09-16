@@ -22,11 +22,11 @@
             <v-spacer></v-spacer>
 
             <!-- 즐겨찾기 & 열람목록 아이콘 -->
-            <v-btn icon="icon" href="http://localhost:8080/Mark_list">
+            <v-btn icon="icon" href="http://localhost:8080/markList">
                 <v-icon large="large" color="#558B2F">mdi-heart</v-icon>
             </v-btn>
 
-            <v-btn icon="icon" href="http://localhost:8080/Open_list">
+            <v-btn icon="icon" href="http://localhost:8080/openList">
                 <v-icon large="large" color="#558B2F">mdi-format-list-bulleted-square</v-icon>
             </v-btn>
 
