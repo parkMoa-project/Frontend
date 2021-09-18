@@ -6,7 +6,6 @@ import MarkList from "./views/MarkList";
 import OpenList from "./views/OpenList";
 import ParkInfo from "./views/ParkInfo";
 import Review from "./views/Review";
-import Sample from "./views/Sample";
 
 
 Vue.use(VueRouter)
@@ -45,11 +44,6 @@ const router = new VueRouter({
         path: "/review",
         name: "Review",
         component: Review
-    },
-    {
-        path: "/sample",
-        name: "Sample",
-        component: Sample
     },
     ]
 

@@ -1,6 +1,5 @@
 <template>
   <v-app id="app">
-    <!-- v-bind:하위컴포넌트 속성명="상위 컴포넌트 전달할 데이터명"  -->
     <v-content id="content" class="content">
       <router-view :key="$route.fullPath"></router-view>
     </v-content>

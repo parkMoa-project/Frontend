@@ -52,6 +52,7 @@
           color="warning"
           empty-icon="$$ratingFull"
           half-increments
+          hover
           length="5"
           size="40">
         </v-rating>
@@ -74,7 +75,7 @@ export default {
     return {
       hashtagRating: [1], //해시태그 산책 선택 고정
       starRating: [],
-      rating: 3, //기본 별점 고정
+      rating: 0, //기본 별점 고정
 
       dialog: false, //모달창 닫기
     }

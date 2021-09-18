@@ -4,12 +4,12 @@
 
     <!-- 공원 상세정보 start-->
     <v-container fluid class="mx-auto my-10">
-      <v-list-item v-model="detail">
+      <v-list-item>
         <v-list-item-content>
           <!-- 공원 이름 & 하트 아이콘  -->
           <v-row>
             <v-col class="ml-12 d-flex justify-start"> 
-              <h1 style="color:#558B2F">공원이름</h1>
+              <h1 style="color:#558B2F">{{item.parkname}}</h1>
             </v-col>
        
             <v-col cols="1" class="mr-12 d-flex justify-end">
@@ -32,8 +32,18 @@
           <v-row class="ma-3">
             <!-- 공원 이미지 & 별점(별점,평균 값) & 별점 리뷰 버튼-->
             <v-col cols="auto">
-              <v-img class="ml-4" width="500px" height="300px"        
-                src=""> 
+              <v-img class="ml-4"
+                v-if="item.image !== null"
+                :src="item.image"
+                width="400"
+                contain> 
+              </v-img>
+              <v-img class="ml-4"
+                v-else
+                src="@/assets/회색.png"
+                :aspect-ratio="5/3"
+                width="400"
+                contain> 
               </v-img> 
         
               <v-row align="center" class="ma-3">
@@ -60,45 +70,45 @@
                 <v-col class="d-flex justify-start grey--text" cols="12">여기서부터 7.2km</v-col>
               </v-row>
               <v-divider class= "mt-2 mb-6"/>
-              <v-row>
-                <v-col class="a d-flex justify-start" cols="auto">주소</v-col>
-                <v-col class="b text-justify ml-9" v-text="item.address"></v-col>
+              
+              <v-row class="cc">
+                <v-col class="a d-flex justify-start mr-16" cols="auto">주소</v-col>
+                <v-col class="b text-justify ml-5" v-text="item.address"></v-col>
               </v-row>
-              <v-row>
-                <v-col class="a d-flex justify-start" cols="auto">면적</v-col>
-                <v-col class="b text-justify ml-9">면적 내용임</v-col>
+              <v-row class="cc">
+                <v-col class="a d-flex justify-start mr-16" cols="auto">개요</v-col>
+                <v-col class="b text-justify ml-5" v-text="item.overview"></v-col>
               </v-row>
-              <v-row>
-                <v-col class="a d-flex justify-start" cols="auto">개요</v-col>
-                <v-col class="b text-justify ml-9">개요 내용임</v-col>
+              <v-row class="cc">
+                <v-col class="a d-flex justify-start mr-13" cols="auto">면적(m²)</v-col>
+                <v-col class="b text-justify" v-text="item.area"></v-col>
               </v-row>
-              <v-row>
-                <v-col class="a d-flex justify-start" cols="auto">개원일</v-col>
-                <v-col class="b text-justify ml-5">개원일 내용임</v-col>
+              <v-row class="cc">
+                <v-col class="a d-flex justify-start mr-13" cols="auto">주요시설</v-col>
+                <v-col class="b text-justify" v-text="item.mainfacility" ></v-col>
               </v-row>
-              <v-row>
-                <v-col class="a d-flex justify-start" cols="auto">주요시설</v-col>
-                <v-col class="b text-justify ml-1">주요시설 내용임</v-col>
+              <v-row class="cc">
+                <v-col class="a d-flex justify-start mr-13" cols="auto">운동기구</v-col>
+                <v-col class="b text-justify" v-text="item.goods"></v-col>
               </v-row>
-              <v-row>
-                <v-col class="a d-flex justify-start" cols="auto">번호</v-col>
-                <v-col class="b text-justify ml-9">번호 내용임</v-col>
+              <v-row class="cc">
+                <v-col class="a d-flex justify-start mr-13" cols="auto">전화번호</v-col>
+                <v-col class="b text-justify" v-text="item.pnum"></v-col>
               </v-row>
-              <v-row>
-                <v-col class="a d-flex justify-start" cols="auto">주요식물</v-col>
-                <v-col class="b text-justify ml-1">주요식물 내용임</v-col>
+              <v-row class="cc">
+                <v-col class="a d-flex justify-start mr-16" cols="auto">안내도</v-col>
+                <v-col class="b text-justify ml-1">
+                  <v-img v-if="item.guidemap !== null" :src="item.guidemap" width="700px" contain/>
+                  <div v-else>정보없음</div>
+                </v-col>
               </v-row>
-              <v-row>
-                <v-col class="a d-flex justify-start" cols="auto">안내도</v-col>
-                <v-col class="b text-justify ml-5">안내도 내용임</v-col>
+              <v-row class="cc">
+                <v-col class="a d-flex justify-start mr-12" cols="auto">오시는 길</v-col>
+                <v-col class="b text-justify" v-text="item.direction"></v-col>
               </v-row>
-              <v-row>
-                <v-col class="a d-flex justify-start" cols="auto">오시는 길</v-col>
-                <v-col class="b text-justify ml-0">오시는길 내용임</v-col>
-              </v-row>
-              <v-row>
-                <v-col class="a d-flex justify-start" cols="auto">참고사항</v-col>
-                <v-col class="b text-justify ml-1">이용시 참고사항 내용임</v-col>
+              <v-row class="cc">
+                <v-col class="a d-flex justify-start" cols="auto">이용시 참고사항</v-col>
+                <v-col class="b text-justify" v-text="item.notes"></v-col>
               </v-row>
             </v-col>
           </v-row>
@@ -118,26 +128,11 @@ export default {
     Header: Header,
     Review: Review,
   },
-  data() {
-    return {
-      detail: false,
-      item: {
-        parkname: null,
-        address: null,
-      },
-      // body:this.$router.query,
-      // num:this.$route.query.num
-    };
+  computed: {
+    item() {
+      return JSON.parse(this.$route.query.item) // 스트링 넘어온거를 객체로 다시 파싱해서 쓸수 잇게
+    }
   },
-  methods: {
-    doOpen(item) {
-      this.detail = true;
-      this.item = item;
-    },
-    doclose() {
-      this.detail = false;
-    } //필요 없으면 지우기 
-  }
 }
 </script>
 

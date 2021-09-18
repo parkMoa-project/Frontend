@@ -29,6 +29,9 @@ export default {
   methods: {
     ...mapActions(["getinfo"]),
   },
+  mounted: {
+    
+  }
 };
 </script>
 
@@ -46,7 +49,7 @@ export default {
 
   border-radius: 30px; /*모서리 설정*/
   /* border: 0px solid rgb(8, 8, 8); 테두리 */
-  box-shadow: 0px 0px 10px 0px rgb(100, 99, 99); /*테두리 그림자*/
+  box-shadow: 0px 0px 10px 0px rgb(100, 99, 99); /*테두리 그림자
   background-color: white; /*배경*/
   display: block; /*글속성 박스로 바꾸기*/
 
@@ -65,7 +68,7 @@ export default {
 
 /*포인터 닿으면 텍스트 색상 */
 .hash_tags > a:hover {
-  color: rgb(5, 252, 33);
+  color: rgb(168, 247, 177);
 }
 
 /*해시태그 박스 이미지 */

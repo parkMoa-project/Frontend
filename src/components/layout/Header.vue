@@ -23,7 +23,7 @@
 
             <!-- 즐겨찾기 & 열람목록 아이콘 -->
             <v-btn icon="icon" href="http://localhost:8080/markList">
-                <v-icon large="large" color="#558B2F">mdi-heart</v-icon>
+                <v-icon large="large" color="#E57373">mdi-heart</v-icon>
             </v-btn>
 
             <v-btn icon="icon" href="http://localhost:8080/openList">

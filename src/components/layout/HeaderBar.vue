@@ -25,7 +25,7 @@
 
   <!-- 즐겨찾기 & 열람목록 아이콘 -->
   <v-btn icon href="http://localhost:8080/markList">   
-  <v-icon large color="#558B2F">mdi-heart</v-icon>
+  <v-icon large color="#E57373">mdi-heart</v-icon>
   </v-btn>
   
   <v-btn icon href="http://localhost:8080/openList">
@@ -72,7 +72,8 @@
       class="ma-2" 
       color="#212121" 
       dark
-      @click="getLocation()">
+      href="http://localhost:8080/location">
+      <!-- @click="getCurrentPosition(position)"> -->
       <v-icon dark color="#E64A19">mdi-antenna</v-icon>
     <!-- 바 -->
     <v-card
@@ -97,36 +98,33 @@ import {mapActions} from "vuex";
 export default {
   data() {
     return {
-      inputText: "",
-      latitude: "",
-      longitude: "",
-      curPosition: ""
+            dialog: false,
+            inputText: "",
+            latitude: "",
+            longitude: "",
+            curPosition: ""
+        }
+    },
+    computed: {
+      getPosition() {
+        return this.curPosition
       }
     },
-  mounted() {
-    this.geolocation = navigator.geolocation.getCurrentPosition((position) => {
-    console.log(position.coords.latitude + ", " + position.coords.longitude)
-    this.latitude = position.coords.latitude
-    this.longitude = position.coords.longitude
-    this.curPosition = "사용자 위치 주소: " + String(this.latitude) + ", " + String(this.longitude)
-    })
-  },
-  computed: {
-    getLocation() {
-      return navigator.geolocation.getCurrentPosition((position) => {
-        this.latitude = position.coords.latitude //위도
-        this.longitude = position.coords.longitude //경도
-        this.curPosition = "사용자 위치 주소" + String(this.latitude) + ", " + String(this.longitude)
-      })
+    methods: {
+        ...mapActions(["getinfo"]),
+        updateInput: function(e) {
+            var updatedText = e.target.value
+            this.inputText = updatedText
+        },
+        getLocation() {
+            navigator.geolocation.getCurrentPosition((position) => {
+                this.latitude = position.coords.latitude
+                this.longitude = position.coords.longitude
+                this.curPosition = String(this.latitude) + ", " + String(this.longitude)
+            }, (error) => { console.log(`ERROR(${error.code}): ${error.message}`) })
+            this.dialog = false
+        }
     }
-  },
-  methods: {
-    ...mapActions(["getinfo"]),
-    updateInput: function (e) {
-      var updatedText = e.target.value
-      this.inputText = updatedText
-    }
-  }
 }
   
 //   if (navigator.geolocation) {
