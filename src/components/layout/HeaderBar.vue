@@ -68,20 +68,15 @@
   <!-- 사용자 위치 주소 아이콘 & 바 -->
   <div class="location">
     <!-- 아이콘 -->
-    <v-btn
-      class="ma-2" 
-      color="#212121" 
-      dark
-      href="http://localhost:8080/location">
+    <v-btn class="ma-2" color="#212121" dark>
       <!-- @click="getCurrentPosition(position)"> -->
       <v-icon dark color="#E64A19">mdi-antenna</v-icon>
-    <!-- 바 -->
-    <v-card
-      class="d-flex pa-0"
-      outlined
-      tile>
-      <div>{{ curPosition }}</div>
-    </v-card>
+      <!-- 바 -->
+      <v-card class="d-flex pa-0" outlined tile>
+        <div v-if="error">서울 시청 주소: {{ error }}</div>
+        <div v-if="gettingLocation">위치 가져오는 중...</div>
+        <div v-if="location">사용자 위치 주소: {{location.coords.latitude}}, {{ location.coords.longitude}}</div>
+      </v-card>
     </v-btn>
   </div>
 
@@ -98,33 +93,88 @@ import {mapActions} from "vuex";
 export default {
   data() {
     return {
-            dialog: false,
-            inputText: "",
-            latitude: "",
-            longitude: "",
-            curPosition: ""
-        }
-    },
-    computed: {
-      getPosition() {
-        return this.curPosition
-      }
-    },
-    methods: {
-        ...mapActions(["getinfo"]),
-        updateInput: function(e) {
-            var updatedText = e.target.value
-            this.inputText = updatedText
-        },
-        getLocation() {
-            navigator.geolocation.getCurrentPosition((position) => {
-                this.latitude = position.coords.latitude
-                this.longitude = position.coords.longitude
-                this.curPosition = String(this.latitude) + ", " + String(this.longitude)
-            }, (error) => { console.log(`ERROR(${error.code}): ${error.message}`) })
-            this.dialog = false
-        }
+      dialog: false,
+      inputText: "",
+      
+      location: null,
+      gettingLocation: false,
+      error: null
     }
+  },
+  created() {
+    //do we support geolocation
+    if(!("geolocation" in navigator)) {
+      this.error = 'Geolocation is not available.';
+      return;
+    }
+
+    this.gettingLocation = true;
+    // get position
+    navigator.geolocation.getCurrentPosition(pos => {
+      this.gettingLocation = false;
+      this.location = pos;
+      console.log('userLocation: ', this.location ,);
+    }, err => {
+      this.gettingLocation = false;
+      this.error = err;
+
+      var latitude = 37.566361;
+      var longitude = 126.977944;
+      this.error = latitude + ', ' + longitude;
+      console.log('latitude ', latitude , ', longitude ' , longitude);
+
+    })
+  },
+
+  // mounted() {
+  //   //사용자 위치 동의 불러오기
+  //     navigator.geolocation.getCurrentPosition((position) => {
+  //       var latitude = position.coords.latitude; //위도
+  //       var longitude = position.coords.longitude; //경도
+
+  //       this.curPosition = '사용자 위치 주소: ' + latitude + ', ' + longitude;
+  //       console.log('latitude ', latitude , ', longitude ' , longitude);
+  //     });
+
+  //   if (navigator.geolocation) {}
+  //   else {
+  //     function error(e) {
+  //     var latitude = 37.566361;
+  //     var longitude = 126.977944
+
+  //     this.curPosition = '서울 시청 주소: ' + latitude + ', ' + longitude;
+  //     alert('사용자 위치 오류로 서울시청 기준으로 검색됩니다.');
+  //     console.log('latitude', latitude , ', longitude', longitude);
+  //     }
+      
+  //   };
+
+
+  // },
+  // mounted() {
+  //   this.geolocation = navigator.geolocation.getCurrentPosition((position) => {
+  //   console.log(position.coords.latitude + ",, " + position.coords.longitude)
+  //   this.latitude = position.coords.latitude
+  //   this.longitude = position.coords.longitude
+  //   this.curPosition = "사용자 위치 주소: " + String(this.latitude) + ",,," + String(this.longitude)
+  //   })
+  // },
+  // computed: {
+  //   getLocation() {
+  //     return navigator.geolocation.getCurrentPosition((position) => {
+  //       this.latitude = position.coords.latitude //위도
+  //       this.longitude = position.coords.longitude //경도
+  //       this.curPosition = "사용자 위치 주소" + String(this.latitude) + ", " + String(this.longitude)
+  //     })
+  //   }
+  // },
+  methods: {
+    ...mapActions(["getinfo"]),
+    updateInput: function (e) {
+      var updatedText = e.target.value
+      this.inputText = updatedText
+    }
+  }
 }
   
 //   if (navigator.geolocation) {
