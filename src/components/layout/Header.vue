@@ -9,7 +9,7 @@
             src="@/assets/배경.jpeg">
 
             <!-- 공원모아 로고 -->
-            <a bind:="bind:" href="http://localhost:8080/home">
+            <a bind:="bind:" href="/home">
                 <v-img
                     alt="Logo"
                     class="shrink mr-2"
@@ -22,11 +22,11 @@
             <v-spacer></v-spacer>
 
             <!-- 즐겨찾기 & 열람목록 아이콘 -->
-            <v-btn icon="icon" href="http://localhost:8080/markList">
+            <v-btn icon="icon" href="/markList">
                 <v-icon large="large" color="#E57373">mdi-heart</v-icon>
             </v-btn>
 
-            <v-btn icon="icon" href="http://localhost:8080/openList">
+            <v-btn icon="icon" href="/openList">
                 <v-icon large="large" color="#558B2F">mdi-format-list-bulleted-square</v-icon>
             </v-btn>
 

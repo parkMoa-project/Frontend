@@ -5,14 +5,26 @@
 
 
     <v-container class="mx-auto" max-width="full">
-      <!-- 검색결과 개수 -->
-      <v-subheader v-if="page === 1" class="caption mt-2">
-        '{{$route.query.param}}'(으)로 입력한 검색결과 {{ $store.getters.parks.length.toLocaleString("ko-KR") }}개
-      </v-subheader>
-      <v-subheader v-else class="caption mt-2" >
-        '{{$route.query.param}}'(으)로 입력한 검색결과 {{ $store.getters.parks.length.toLocaleString("ko-KR") }}개
-        중 {{ page }}페이지
-      </v-subheader>
+      <v-list-item two-line class="text-left">
+        <v-list-item-content>
+            <!-- 정렬 기준 -->
+            <v-list-item-subtitle v-if="$store.state.error" class="mt-2 caption">
+                '서울특별시청 주소' 기준
+            </v-list-item-subtitle>
+            <v-list-item-subtitle v-else class="mt-2 caption">
+                '사용자 위치 주소' 기준
+            </v-list-item-subtitle>
+           
+            <!-- 검색결과 개수 -->
+            <v-list-item-subtitle v-if="page === 1" class="caption">
+                '{{$route.query.param}}'(으)로 입력한 검색결과 {{ $store.getters.parks.length.toLocaleString("ko-KR") }}개
+            </v-list-item-subtitle>
+            <v-list-item-subtitle v-else class="caption">
+                '{{$route.query.param}}'(으)로 입력한 검색결과 {{ $store.getters.parks.length.toLocaleString("ko-KR") }}개
+                중 {{ page }}페이지
+            </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
 
       <!--검색결과 list -->
       <v-list>
@@ -23,12 +35,10 @@
             <v-col class="align-self-center" cols="auto">
               <v-item-group> 
                 <v-item v-slot="{ active, toggle }">
-                  <v-btn icon dark color="#E57373" @click="toggle">
-                    <!-- <v-icon @click="toggle">
+                  <v-btn icon dark color="#E57373">
+                    <v-icon @click="toggle">
                       {{ active ? 'mdi-heart' : 'mdi-heart-outline' }}
-                    </v-icon> -->
-                    <v-icon v-if="!active" color="green lighten-1">mdi-heart-outline</v-icon>
-                    <v-icon v-else color="green lighten-1">mdi-heart</v-icon>
+                    </v-icon>
                   </v-btn>
                 </v-item>
               </v-item-group>
@@ -48,11 +58,11 @@
           <v-divider :key="i"></v-divider>
           </v-list-item-content>
         </v-list-item>
-        <v-lsit-item v-if="$store.getters.parks.length.toLocaleString() == 0">
+        <v-list-item v-if="$store.getters.parks.length.toLocaleString() == 0">
           <v-list-item-content>
             <v-list-item-title>검색 결과가 없습니다.</v-list-item-title>
           </v-list-item-content>
-        </v-lsit-item>
+        </v-list-item>
       </v-list>
       
 
@@ -67,7 +77,6 @@
 <script>
 import HeaderBar from "../components/layout/HeaderBar.vue";
 import Sort from "../components/layout/Sort.vue";
-
 export default {
   components: {
     HeaderBar: HeaderBar,

@@ -35,15 +35,15 @@
               <v-img class="ml-4"
                 v-if="item.image !== null"
                 :src="item.image"
-                width="400"
-                contain> 
+                max-width="400" min-width="400" height="290"
+                > 
+
               </v-img>
               <v-img class="ml-4"
                 v-else
                 src="@/assets/회색.png"
-                :aspect-ratio="5/3"
-                width="400"
-                contain> 
+                max-width="400" min-width="400" height="290"
+                >  
               </v-img> 
         
               <v-row align="center" class="ma-3">
@@ -61,13 +61,13 @@
               <Review/> 
             </v-col>
 
-            <!-- 공원 상세 정보들 : 관련 키워드,주소,면적,개요,개원일,주요시설,번호,주요식물,안내도,오시는길,이용시 참고사항-->
+            <!-- 공원 상세 정보들 : 이름, 사진, 해시태그, 거리, 주소, 개요, 면적, 주요시설, 운동기구, 전화번호, 안내도, 오시는길, 참고사항-->
             <v-col class="ml-7">
               <v-row>
-                <v-col class="a d-flex justify-start font-italic" cols="12" style="color:#558B2F">#응봉 #성동구 #강아지산책 #운동 #넓음 #어린이</v-col>
+                <v-col class="a d-flex justify-start font-italic" cols="12" style="color:#558B2F" v-text="'#'+item.division+' #'+item.district" > </v-col>
               </v-row>
               <v-row>
-                <v-col class="d-flex justify-start grey--text" cols="12">여기서부터 7.2km</v-col>
+                <v-col class="d-flex justify-start grey--text" cols="12" v-text="item.distance"></v-col>
               </v-row>
               <v-divider class= "mt-2 mb-6"/>
               
@@ -98,7 +98,7 @@
               <v-row class="cc">
                 <v-col class="a d-flex justify-start mr-16" cols="auto">안내도</v-col>
                 <v-col class="b text-justify ml-1">
-                  <v-img v-if="item.guidemap !== null" :src="item.guidemap" width="700px" contain/>
+                  <v-img v-if="item.guidemap !== null" :src="item.guidemap" max-width="700px" max-height="700" contain/>
                   <div v-else>정보없음</div>
                 </v-col>
               </v-row>
@@ -121,7 +121,7 @@
 <script>
 import Header from "../components/layout/Header.vue";
 import Review from "./Review.vue";
-
+import { mapActions } from "vuex";
 export default {
   name: "ParkInfo",
   components: {
@@ -131,12 +131,16 @@ export default {
   computed: {
     item() {
       console.log(JSON.parse(this.$route.query.item))
-      return JSON.parse(this.$route.query.item) // 스트링 넘어온거를 객체로 다시 파싱해서 쓸수 잇게'
+      return JSON.parse(this.$route.query.item) // 스트링으로 넘어온거 객체로 다시 파싱해서 쓸 수 있게'
       
     }
   },
   mounted() {
+    this.addOpenList(this.$route.query.item)
     console.log(JSON.parse(this.$route.query.item))
+  },
+  methods: {
+      ...mapActions(["addOpenList"])
   }
 }
 </script>

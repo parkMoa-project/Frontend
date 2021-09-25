@@ -50,41 +50,43 @@
     </head>
     <body>
       <div class="search-box">
-          <input
+        <input
           v-bind:value="inputText"
           v-on:input="updateInput"
           type="text"
           class="search-txt"
           name=""
-          placeholder="#" />
+          placeholder="검색어를 입력하세요" 
+          @keyup.enter="getinfo(inputText)" 
+        />
 
-          <a class="search-btn" @click="getinfo(inputText)">
-            <i class="fas fa-search"></i>
-          </a>
-        </div>
+        <a class="search-btn" @click="getinfo(inputText)">
+          <i class="fas fa-search"></i>
+        </a>
+      </div>
     </body>
   </template>
     
   <!-- 사용자 위치 주소 아이콘 & 바 -->
-    <div class="location">
-      <!-- 아이콘 -->
-      <v-btn
-        class="ma-2" 
-        color="#212121" 
-        dark
-        @click="getLocation()">
-        <v-icon dark color="#E64A19">mdi-antenna</v-icon>
+  <div class="location">
+    <!-- 아이콘 -->
+    <v-btn
+      class="ma-2" 
+      color="#212121" 
+      dark
+      @click="getLocation()">
+        <v-icon dark color="#E64A19" left size = 25>mdi-map-marker-radius</v-icon>
         <!-- 바 -->
         <v-card
           class="d-flex pa-0"
           outlined
           tile>
-          <div v-if="error">서울 시청 주소: {{ error }}</div>
-          <div v-if="gettingLocation">위치 가져오는 중...</div>
-          <div v-if="location">사용자 위치 주소: {{location.coords.latitude}}, {{ location.coords.longitude}}</div>
+          <div v-if="$store.state.error && !$store.state.gettingLocation">서울특별시청 주소: {{$store.state.cityHall.latitude}}, {{ $store.state.cityHall.longitude}}</div>
+          <div v-else-if="$store.state.gettingLocation">위치 가져오는 중...</div>
+          <div v-else>사용자 위치 주소: {{latitude}}, {{longitude}}</div>
         </v-card>
-      </v-btn>
-    </div>
+    </v-btn>
+  </div>
 
     </v-toolbar>
   </div>
@@ -93,119 +95,27 @@
 
 <!-- 사용자 위치 가져오기 -->
 <script> 
-  import { mapActions } from "vuex";
-  export default {
-    data () {
-        return {
-            dialog: false,
-            inputText: "",
-            latitude: "",
-            longitude: "",
-            curPosition: "서울시청 위치 기준: 37.566361, 126.977944",
-            location: null,
-            gettingLocation: false,
-            error: null
-        }
-    },
-    // mounted () {
-      
-    // },
-    
-    
-    computed: {
-      getPosition() {
-        return this.curPosition
+import { mapGetters, mapActions } from "vuex";
+
+export default {
+  data () {
+      return {
+          dialog: false,
+          inputText: "",
       }
-    },
+  },
+  computed: { 
+      ...mapGetters(["latitude", "longitude"])
+  },
   methods: {
-    ...mapActions(["getinfo"]),
-    updateInput: function (e) {
-      var updatedText = e.target.value
-      this.inputText = updatedText
-    },
-    getLocation() {
-    //do we support geolocation
-    if(!("geolocation" in navigator)) {
-      this.error = 'Geolocation is not available.';
-      return;
-    }
-    this.gettingLocation = true;
-    // get position
-    navigator.geolocation.getCurrentPosition(pos => {
-      this.gettingLocation = false;
-      this.location = pos;
-      console.log('userLocation: ', this.location ,);
-    }, err => {
-      this.gettingLocation = false;
-      this.error = err;
-      console.log('Error message ', err);
-      var latitude = 37.566361;
-      var longitude = 126.977944;
-      this.error = latitude + ', ' + longitude;
-      console.log('latitude ', latitude , ', longitude ' , longitude);
-    })
-    }
+      ...mapActions(["getLocation", "getinfo"]),
+      updateInput: function (e) {
+        var updatedText = e.target.value
+        this.inputText = updatedText
+      },
   }
 }
-// mounted() {
-  //   //사용자 위치 동의 불러오기
-  //     navigator.geolocation.getCurrentPosition((position) => {
-  //       var latitude = position.coords.latitude; //위도
-  //       var longitude = position.coords.longitude; //경도
-  //       this.curPosition = '사용자 위치 주소: ' + latitude + ', ' + longitude;
-  //       console.log('latitude ', latitude , ', longitude ' , longitude);
-  //     });
-  //   if (navigator.geolocation) {}
-  //   else {
-  //     function error(e) {
-  //     var latitude = 37.566361;
-  //     var longitude = 126.977944
-  //     this.curPosition = '서울 시청 주소: ' + latitude + ', ' + longitude;
-  //     alert('사용자 위치 오류로 서울시청 기준으로 검색됩니다.');
-  //     console.log('latitude', latitude , ', longitude', longitude);
-  //     }
-      
-  //   };
-  // },
-  // mounted() {
-  //   this.geolocation = navigator.geolocation.getCurrentPosition((position) => {
-  //   console.log(position.coords.latitude + ",, " + position.coords.longitude)
-  //   this.latitude = position.coords.latitude
-  //   this.longitude = position.coords.longitude
-  //   this.curPosition = "사용자 위치 주소: " + String(this.latitude) + ",,," + String(this.longitude)
-  //   })
-  // },
-  // computed: {
-  //   getLocation() {
-  //     return navigator.geolocation.getCurrentPosition((position) => {
-  //       this.latitude = position.coords.latitude //위도
-  //       this.longitude = position.coords.longitude //경도
-  //       this.curPosition = "사용자 위치 주소" + String(this.latitude) + ", " + String(this.longitude)
-  //     })
-  //   }
-  // },
- 
-  
-//   if (navigator.geolocation) {
-    
-//     // GeoLocation을 사용 가능 할 때
-//     navigator.geolocation.getCurrentPosition(function(position) {
-        
-//         var lat = position.coords.latitude, // 위도
-//             lon = position.coords.longitude; // 경도
-//             curPosition = "사용자 위치 주소" + String(lat) + ", " + String(lon)
-        
-//       });
-    
-// } else { // GeoLocation을 사용 할 수 없을때
-    
-//     var lat = 37.566361 // 서울시청 위도
-//         lon = 126.977944 // 서울시청 경도
-//         curPosition = "사용자 위치 주소" + String(lat) + ", " + String(lon)
-//         message = 'geolocation을 사용할수 없어요..'
-//         }
 </script>
-
 
 
 <style>

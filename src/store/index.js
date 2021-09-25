@@ -6,26 +6,56 @@ import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
 
-// const resourceHost = "http://20.194.30.72:8000/"
-// var config = {
-//     headers: { 'Access-Control-Allow-Origin': '*' }
-//   };
-
-
 export default new Vuex.Store({
-  plugins: [createPersistedState({})],
-
+  plugins: [createPersistedState(
+    {
+      storage: window.sessionStorage
+    })],
   state: {
     parks: [],
-    allUsers: [
-      { userId: 'abcd', passsword: '123', address: 'Seoul' },
-      { userId: 'efgh', password: '456', address: 'Seoul' },
-    ]
+    openList: [],
+    gettingLocation: false,
+    error: true,
+    cityHall: {
+      latitude: 37.566361,
+      longitude: 126.977944
+    },
+    currentLocation: {
+      latitude: 37.566361,
+      longitude: 126.977944
+    },
   },
+
   getters: {
-    parks: (state) => { return state.parks }
+    parks: (state) => { return state.parks },
+    openList: (state) => {
+      var list = state.openList.map(x => JSON.parse(x))
+      return list
+    },
+    latitude: (state) => { return state.currentLocation.latitude },
+    longitude: (state) => { return state.currentLocation.longitude },
   },
+
   mutations: {
+    setError(state, payload) {
+      state.error = payload
+      console.log("error:", payload)
+    },
+
+    setGettingLocation(state, payload) {
+      state.gettingLocation = payload
+      console.log("gettingLocation:", payload)
+    },
+
+    setLocation(state, payload) {
+      var location = {
+        latitude: payload.latitude,
+        longitude: payload.longitude
+      }
+      state.currentLocation = location
+      console.log("Location:", state.currentLocation)
+    },
+
     getinfo(state, payload) {
       state.parks = []
       for (let item of payload) {
@@ -41,13 +71,15 @@ export default new Vuex.Store({
           direction: "",
           notes: "",
           pnum: "",
+          district: "",
+          division: "",
 
           location: "",
           latitude: "",
           longitude: "",
 
           ratings: "★★★★☆ 4.0",
-          distance: "여기서부터 7.2km",
+          distance: "",
         }
 
         park.parkname = item._source.Park_name
@@ -61,26 +93,74 @@ export default new Vuex.Store({
         park.direction = item._source.Direction !== null ? item._source.Direction : "정보없음"
         park.notes = item._source.Use_notes !== null ? item._source.Use_notes : "정보없음"
         park.pnum = item._source.Park_number !== null ? item._source.Park_number : "정보없음"
+        park.district = item._source.District
+        park.division = item._source.Park_division
 
         park.location = item.location
         park.latitude = item._source.Latitude
         park.longitude = item._source.Longitude
-
-        // park.distance =         
-
-
+        park.distance = ("여기서부터 " + Math.round(item.sort * 100) / 100 + "km")
 
         state.parks.push(park)    // parks에 공원정보 저장 
       }
+    },
+    addOpenList(state, payload) {
+      console.log("payload")
+      console.log(payload)
+      // var recent = payload
+      console.log(state.openList.includes(payload))
+      if (!state.openList.includes(payload)) {
+        state.openList.push(payload)
+      }
     }
   },
+
   actions: {
+    getLocation({ commit }) {
+      //do we support geolocation
+      if (!("geolocation" in navigator)) {
+        commit("setError", true)
+        return;
+      }
+
+      commit("setGettingLocation", true)
+
+      // get position
+      navigator.geolocation.getCurrentPosition(pos => {
+        commit("setError", false)
+        commit("setGettingLocation", false)
+        commit("setLocation", pos.coords)
+        console.log('userLocation: ', pos);
+      }, err => {
+        commit("setGettingLocation", false)
+        commit("setError", true)
+        console.log('Error message ', err);
+        console.log('latitude ', 37.566361, ', longitude ', 126.977944);
+      })
+    },
+
     getinfo({ commit }, inputText) {
       console.log(inputText)
+      var pos = {
+        latitude: null,
+        longitude: null
+      }
+      if (this.state.error) {
+        pos.latitude = this.state.cityHall.latitude,
+          pos.longitude = this.state.cityHall.longitude
+      }
+      else {
+        pos.latitude = this.state.currentLocation.latitude,
+          pos.longitude = this.state.currentLocation.longitude
+      }
       axios
         .get("http://20.194.30.72:8000/parkmoa/", {
           params: {
-            search: inputText
+            search: inputText,
+            latitude: pos.latitude,
+            longitude: pos.longitude
+            // pos: pos
+
           }
         })
         .then((res) => {
@@ -89,12 +169,16 @@ export default new Vuex.Store({
           parkInfo = res.data.hits
           console.log("parkinfo")
           console.log(res.data.hits)
+          console.log(pos)
           commit("getinfo", parkInfo)
           router.push({ name: "Search", query: { param: inputText } }).catch(e => {
             if (e === "NavigationDuplicated")
               router.replace({ name: "Search", query: { param: inputText } })
           });
         })
+    },
+    addOpenList({ commit }, payload) {
+      commit("addOpenList", payload)
     }
   },
   modules: {},

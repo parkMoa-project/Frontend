@@ -8,13 +8,14 @@
         text="text"
         rounded="rounded"
         class="my-2"
+        :href = "link"
       >
         {{ link }}
       </v-btn>
       <v-col class="primary lighten-2 py-4 text-center white--text" cols="12">
-        {{ new Date().getFullYear() }}
+        {{ 2021 }}
         —
-        <strong>ParkMoA</strong>
+        <strong>ParkMoa</strong>
       </v-col>
     </v-row>
   </v-footer>
@@ -25,7 +26,7 @@ export default {
   data: () => ({
     links: ["Home", "Location", "Team"],
   }),
-};
+}
 </script>
 
 <style></style>
