@@ -48,14 +48,14 @@
         
               <v-row align="center" class="ma-3">
                 <v-rating
-                  :value="4.5"
+                  :value="4.0"
                   color="warning"
                   dense
                   half-increments
                   readonly
                   size="25">
                 </v-rating>
-                <div class="grey--text ml-3">4.5</div>
+                <div class="grey--text ml-3">4.0</div>
               </v-row>         
 
               <Review/> 
@@ -130,9 +130,14 @@ export default {
   },
   computed: {
     item() {
-      return JSON.parse(this.$route.query.item) // 스트링 넘어온거를 객체로 다시 파싱해서 쓸수 잇게
+      console.log(JSON.parse(this.$route.query.item))
+      return JSON.parse(this.$route.query.item) // 스트링 넘어온거를 객체로 다시 파싱해서 쓸수 잇게'
+      
     }
   },
+  mounted() {
+    console.log(JSON.parse(this.$route.query.item))
+  }
 }
 </script>
 

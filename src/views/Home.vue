@@ -74,56 +74,56 @@ export default {
       rgba(74, 73, 73, 0.139),
       rgba(74, 73, 73, 0.139)
     ),
-    url("https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/%EC%82%B0%EC%B1%85%EB%A1%9C%28AMJ%29.jpg/1920px-%EC%82%B0%EC%B1%85%EB%A1%9C%28AMJ%29.jpg");
+    url("../assets/산책.jpg");
 }
 .꽃 {
   background-image: linear-gradient(
       rgba(74, 73, 73, 0.139),
       rgba(74, 73, 73, 0.139)
     ),
-    url("https://www.teahub.io/photos/full/115-1159698_wallpaper-bunga-tulip-.jpg");
+    url("../assets/꽃.jpg");
 }
 .자전거 {
   background-image: linear-gradient(
       rgba(74, 73, 73, 0.139),
       rgba(74, 73, 73, 0.139)
     ),
-    url("https://cdn.pixabay.com/photo/2018/06/02/13/28/bike-3448377_1280.jpg");
+    url("../assets/자전거.jpg");
 }
 .데이트 {
   background-image: linear-gradient(
       rgba(74, 73, 73, 0.139),
       rgba(74, 73, 73, 0.139)
     ),
-    url("https://www.10wallpaper.com/wallpaper/1366x768/1511/Childhood_love_walk-HD_Desktop_Wallpaper_1366x768.jpg");
+    url("../assets/데이트.jpg");
 }
 .도시공원 {
   background-image: linear-gradient(
       rgba(74, 73, 73, 0.139),
       rgba(74, 73, 73, 0.139)
     ),
-    url("http://dn.joongdo.co.kr/mnt/images/file/2019y/04m/04d/2019040401000616300023191.jpg");
+    url("../assets/도시공원.jpg");
 }
 .자연공원 {
   background-image: linear-gradient(
       rgba(74, 73, 73, 0.139),
       rgba(74, 73, 73, 0.139)
     ),
-    url("http://www.ccnnews.co.kr/news/photo/202007/185897_236065_5032.jpg");
+    url("../assets/자연공원.jpg");
 }
 .운동 {
   background-image: linear-gradient(
       rgba(74, 73, 73, 0.139),
       rgba(74, 73, 73, 0.139)
     ),
-    url("http://www.dps7330.com/bbs/uks_data/sub03/daeil_1466994814_01.gif");
+    url("../assets/운동.jpg");
 }
 .강아지 {
   background-image: linear-gradient(
       rgba(74, 73, 73, 0.139),
       rgba(74, 73, 73, 0.139)
     ),
-    url("https://image-notepet.akamaized.net/resize/620x-/seimage/20191113%2Ff6f280560384db2d6c6d797a281e52b1.png");
+    url("../assets/강아지.png");
 }
 
 /*해시태그 박스 배치*/

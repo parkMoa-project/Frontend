@@ -42,6 +42,7 @@ export default new Vuex.Store({
           notes: "",
           pnum: "",
 
+          location: "",
           latitude: "",
           longitude: "",
 
@@ -61,8 +62,12 @@ export default new Vuex.Store({
         park.notes = item._source.Use_notes !== null ? item._source.Use_notes : "정보없음"
         park.pnum = item._source.Park_number !== null ? item._source.Park_number : "정보없음"
 
+        park.location = item.location
         park.latitude = item._source.Latitude
         park.longitude = item._source.Longitude
+
+        // park.distance =         
+
 
 
         state.parks.push(park)    // parks에 공원정보 저장 
@@ -105,7 +110,7 @@ export default new Vuex.Store({
 // var coord = new kakao.maps.LatLng(37.56496830314491, 126.93990862062978);
 // var callback = function(result, status) {
 //     if (status === kakao.maps.services.Status.OK) {
-//         console.log('그런 너를 마주칠까 ' + result[0].address.address_name + '을 못가');
+//         console.log(result[0].address.address_name);
 //     }
 // };
 

@@ -1,18 +1,12 @@
 # parkmoa Frontend
-해 냈 다
+## update
 ```
-<태형님 branches 코드 추가>
-✓ 홈 해시태그박스 텍스트 포인터 닿으면 바뀌는 컬러 변경 
-✓ 헤더바 즐겨찾기 하트 컬러 변경 
-✓ 새로고침해도 동일 화면 완료 (plugins: [createPersistedState({})],) ->“yarn add vuex-persistedstate” -> 플러그인 설치
-✓ 검색결과 개수 안내 텍스트문구 ‘(으)’ 추가 
-✓ 검색결과 -> 상세정보 데이터 연동 완료
 
 <수정한 부분>
-✔️ 이미지 데이터 없는 부분 회색배경(일단은)으로 설정 -> Search.vue, ParkInfo.vue
-✔️ 안내도 데이터 없는 부분 회색배경(일단은)으로 설정 -> ParkInfo.vue
-✔️ ParkInfo.vue 보기 좋게 정렬
-✔️ 리뷰 별점 고정 해제, hover 코드 추가 -> Review.vue
+✔️ 태형님 최근 코드 복사 완료
+✔️ 해시태그 이미지 url 변경 -> Home.vue
+✔️ 사용자 위치 동의 headerBar 위치 아이콘 클릭시 요청하는 걸로 변경 -> HeaderBar.vue
+✔️ 사용자 위치 동의 불러오기 비동의시 서울시청 주소, 로딩 중 구현 추가 -> HeaderBar.vue
 ```
 
 ## setting

@@ -23,10 +23,12 @@
             <v-col class="align-self-center" cols="auto">
               <v-item-group> 
                 <v-item v-slot="{ active, toggle }">
-                  <v-btn icon dark color="#E57373">
-                    <v-icon @click="toggle">
+                  <v-btn icon dark color="#E57373" @click="toggle">
+                    <!-- <v-icon @click="toggle">
                       {{ active ? 'mdi-heart' : 'mdi-heart-outline' }}
-                    </v-icon>
+                    </v-icon> -->
+                    <v-icon v-if="!active" color="green lighten-1">mdi-heart-outline</v-icon>
+                    <v-icon v-else color="green lighten-1">mdi-heart</v-icon>
                   </v-btn>
                 </v-item>
               </v-item-group>
