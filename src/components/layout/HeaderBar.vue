@@ -171,7 +171,5 @@ export default {
     top: 70%;
     left: 50%;
     transform: translate(-50%, -20%);
-    color: rgb(15, 75, 60);
-    color: rgb(80, 59, 27);
   }
 </style>
