@@ -23,9 +23,9 @@
 
 <script>
 export default {
-  data: () => ({
-    links: ["Home", "Location", "Team"],
-  }),
+  // data: () => ({
+  //   links: ["Home", "Location", "Team"],
+  // }),
 }
 </script>
 

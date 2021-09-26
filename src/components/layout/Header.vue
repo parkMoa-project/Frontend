@@ -23,11 +23,11 @@
 
             <!-- 즐겨찾기 & 열람목록 아이콘 -->
             <v-btn icon="icon" href="/markList">
-                <v-icon large="large" color="#E57373">mdi-heart</v-icon>
+                <v-icon large="large" color="rgb(219, 116, 75)">mdi-heart</v-icon>
             </v-btn>
 
             <v-btn icon="icon" href="/openList">
-                <v-icon large="large" color="#558B2F">mdi-format-list-bulleted-square</v-icon>
+                <v-icon large="large" color="rgb(80, 59, 27)">mdi-format-list-bulleted-square</v-icon>
             </v-btn>
 
         </v-toolbar>

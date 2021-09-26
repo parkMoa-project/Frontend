@@ -25,11 +25,11 @@
 
   <!-- 즐겨찾기 & 열람목록 아이콘 -->
   <v-btn icon href="/markList">   
-  <v-icon large color="#E57373">mdi-heart</v-icon>
+  <v-icon large color="rgb(219, 116, 75)">mdi-heart</v-icon>
   </v-btn>
   
   <v-btn icon href="/openList">
-  <v-icon large color="#558B2F">mdi-format-list-bulleted-square</v-icon>
+  <v-icon large color="rgb(80, 59, 27)">mdi-format-list-bulleted-square</v-icon>
   </v-btn>
 
   <!-- 검색바 -->
@@ -171,5 +171,7 @@ export default {
     top: 70%;
     left: 50%;
     transform: translate(-50%, -20%);
+    color: rgb(15, 75, 60);
+    color: rgb(80, 59, 27);
   }
 </style>

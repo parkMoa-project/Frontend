@@ -14,7 +14,7 @@
             <v-col class="align-self-center" cols="auto">
               <v-item-group> 
                 <v-item v-slot="{ active, toggle }">
-                  <v-btn icon dark color="#E57373">
+                  <v-btn icon dark color="rgb(219, 116, 75)">
                     <v-icon @click="toggle">
                       {{ active ? 'mdi-heart' : 'mdi-heart-outline' }}
                     </v-icon>

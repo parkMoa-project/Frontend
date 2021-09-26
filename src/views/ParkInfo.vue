@@ -15,7 +15,7 @@
             <v-col cols="1" class="mr-12 d-flex justify-end">
               <v-item-group>
                 <v-item v-slot:default="{ active, toggle }">
-                  <v-btn icon="icon" color="#E57373" class="align-self-center">
+                  <v-btn icon="icon" color="rgb(219, 116, 75)" class="align-self-center">
                     <v-icon @click="toggle"> 
                       {{ active ? 'mdi-heart' : 'mdi-heart-outline' }}
                     </v-icon>

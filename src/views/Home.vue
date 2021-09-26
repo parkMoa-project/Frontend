@@ -71,56 +71,38 @@ export default {
 /*해시태그 박스 이미지 */
 .산책 {
   background-image: linear-gradient(
-      rgba(74, 73, 73, 0.139),
-      rgba(74, 73, 73, 0.139)
+      rgba(241, 240, 240, 0.139),
+      rgba(7241, 240, 240, 0.139)
     ),
-    url("../assets/산책.jpg");
+    url("../assets/산책.png");
 }
 .꽃 {
-  background-image: linear-gradient(
-      rgba(74, 73, 73, 0.139),
-      rgba(74, 73, 73, 0.139)
-    ),
+  background-image: 
     url("../assets/꽃.jpg");
 }
 .자전거 {
-  background-image: linear-gradient(
-      rgba(74, 73, 73, 0.139),
-      rgba(74, 73, 73, 0.139)
-    ),
-    url("../assets/자전거.jpg");
+  background-image: 
+    url("../assets/자전거.png");
 }
 .데이트 {
-  background-image: linear-gradient(
-      rgba(74, 73, 73, 0.139),
-      rgba(74, 73, 73, 0.139)
-    ),
+  background-image: 
     url("../assets/데이트.jpg");
 }
 .도시공원 {
-  background-image: linear-gradient(
-      rgba(74, 73, 73, 0.139),
-      rgba(74, 73, 73, 0.139)
-    ),
-    url("../assets/도시공원.jpg");
+  background-image: 
+    url("../assets/도시공원.png");
 }
 .자연공원 {
-  background-image: linear-gradient(
-      rgba(74, 73, 73, 0.139),
-      rgba(74, 73, 73, 0.139)
-    ),
+  background-image: 
     url("../assets/자연공원.jpg");
 }
 .운동 {
-  background-image: linear-gradient(
-      rgba(74, 73, 73, 0.139),
-      rgba(74, 73, 73, 0.139)
-    ),
+  background-image: 
     url("../assets/운동.jpg");
 }
 .강아지 {
   background-image: 
-    url("../assets/강아지.jpg");
+    url("../assets/강아지.png");
 }
 
 /*해시태그 박스 배치*/
