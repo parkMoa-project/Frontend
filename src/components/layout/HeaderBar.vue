@@ -6,7 +6,7 @@
   <v-toolbar flat class="toolbarImage"
     prominent
     height="250px"
-    src="@/assets/배경2.jpeg"
+    src="@/assets/배경.jpg"
   >
   
   <!-- 공원모아 로고 -->

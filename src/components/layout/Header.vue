@@ -6,7 +6,7 @@
             dark="dark"
             prominent="prominent"
             height="150px"
-            src="@/assets/배경.jpeg">
+            src="@/assets/배경.jpg">
 
             <!-- 공원모아 로고 -->
             <a bind:="bind:" href="/home">

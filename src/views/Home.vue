@@ -119,11 +119,8 @@ export default {
     url("../assets/운동.jpg");
 }
 .강아지 {
-  background-image: linear-gradient(
-      rgba(74, 73, 73, 0.139),
-      rgba(74, 73, 73, 0.139)
-    ),
-    url("../assets/강아지.png");
+  background-image: 
+    url("../assets/강아지.jpg");
 }
 
 /*해시태그 박스 배치*/
