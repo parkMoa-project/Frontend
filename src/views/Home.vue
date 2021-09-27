@@ -6,8 +6,8 @@
       <a class="꽃" @click="getinfo('꽃')"><span>#꽃</span></a>
       <a class="자전거" @click="getinfo('자전거')"><span>#자전거</span></a>
       <a class="데이트" @click="getinfo('데이트')"><span>#데이트</span></a>
-      <a class="도시공원" @click="getinfo('도시공원')"><span>#도시공원</span></a>
-      <a class="자연공원" @click="getinfo('자연공원')"><span>#자연공원</span></a>
+      <a class="도시공원" @click="getinfo('문화공원')"><span>#문화공원</span></a>
+      <a class="자연공원" @click="getinfo('도시자연공원')"><span>#도시자연공원</span></a>
       <a class="운동" @click="getinfo('운동')"><span>#운동</span></a>
       <a class="강아지" @click="getinfo('강아지')"><span>#강아지</span></a>
     </v-container>
