@@ -14,10 +14,10 @@
        
             <v-col cols="1" class="mr-12 d-flex justify-end">
               <v-item-group>
-                <v-item v-slot:default="{ active, toggle }">
-                  <v-btn icon="icon" color="rgb(219, 116, 75)" class="align-self-center">
-                    <v-icon @click="toggle"> 
-                      {{ active ? 'mdi-heart' : 'mdi-heart-outline' }}
+                <v-item >
+                  <v-btn icon="icon" color="rgb(219, 116, 75)" class="align-self-center" >
+                    <v-icon @click="addMarkList(JSON.stringify(item))"> 
+                      {{ $store.state.markList.includes(JSON.stringify(item)) ? 'mdi-heart' : 'mdi-heart-outline' }}
                     </v-icon>
                   </v-btn>
                 </v-item>
@@ -46,16 +46,19 @@
                 >  
               </v-img> 
         
-              <v-row align="center" class="ma-3">
+              <v-row class="d-flex align-center ma-3">
                 <v-rating
-                  :value="4.0"
+                  :value="Number(item.ratings)"
                   color="warning"
                   dense
                   half-increments
+                  background-color="grey lighten-1"
                   readonly
                   size="25">
                 </v-rating>
-                <div class="grey--text ml-3">4.0</div>
+                <caption class="grey--text text-body-1 ml-2">
+                  {{ item.ratings }}
+                </caption>
               </v-row>         
 
               <Review/> 
@@ -64,7 +67,7 @@
             <!-- 공원 상세 정보들 : 이름, 사진, 해시태그, 거리, 주소, 개요, 면적, 주요시설, 운동기구, 전화번호, 안내도, 오시는길, 참고사항-->
             <v-col class="ml-7">
               <v-row>
-                <v-col class="a d-flex justify-start font-italic" cols="12" style="color:#558B2F" v-text="'#'+item.division+' #'+item.district" > </v-col>
+                <v-col class="a d-flex justify-start font-italic" cols="12" style="color:#558B2F" v-text="'#'+item.division+' '+'#'+item.district+' '" > </v-col>
               </v-row>
               <v-row>
                 <v-col class="d-flex justify-start grey--text" cols="12" v-text="item.distance"></v-col>
@@ -131,8 +134,7 @@ export default {
   computed: {
     item() {
       console.log(JSON.parse(this.$route.query.item))
-      return JSON.parse(this.$route.query.item) // 스트링으로 넘어온거 객체로 다시 파싱해서 쓸 수 있게'
-      
+      return JSON.parse(this.$route.query.item) // 스트링으로 넘어온거 객체로 다시 파싱'    
     }
   },
   mounted() {
@@ -140,7 +142,7 @@ export default {
     console.log(JSON.parse(this.$route.query.item))
   },
   methods: {
-      ...mapActions(["addOpenList"])
+      ...mapActions(["addOpenList", "addMarkList"])
   }
 }
 </script>

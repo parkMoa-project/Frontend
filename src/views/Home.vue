@@ -26,9 +26,6 @@ export default {
   methods: {
     ...mapActions(["getinfo"]),
   },
-  mounted() {
-    
-  }
 };
 </script>
 
@@ -39,10 +36,6 @@ export default {
   width: 20%;
   height: 40px;
   padding: 5% 0% 9% 0%;
-
-  /* -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing:border-box; */
 
   border-radius: 30px; /*모서리 설정*/
   /* border: 0px solid rgb(8, 8, 8); 테두리 */
@@ -65,7 +58,7 @@ export default {
 
 /*포인터 닿으면 텍스트 색상 */
 .hash_tags > a:hover {
-  color: rgb(168, 247, 177);
+  color: rgb(185, 255, 194);
 }
 
 /*해시태그 박스 이미지 */

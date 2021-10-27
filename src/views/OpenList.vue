@@ -12,11 +12,11 @@
           <v-row>
             <!--북마크 하트 아이콘 -->
             <v-col class="align-self-center" cols="auto">
-              <v-item-group> 
-                <v-item v-slot="{ active, toggle }">
-                  <v-btn icon dark color="rgb(219, 116, 75)">
-                    <v-icon @click="toggle">
-                      {{ active ? 'mdi-heart' : 'mdi-heart-outline' }}
+              <v-item-group>
+                <v-item>
+                  <v-btn icon dark color="rgb(219, 116, 75)" @click="addMarkList(JSON.stringify(item))">
+                    <v-icon>
+                      {{ $store.state.markList.includes(JSON.stringify(item)) ? 'mdi-heart' : 'mdi-heart-outline' }}
                     </v-icon>
                   </v-btn>
                 </v-item>
@@ -29,7 +29,20 @@
             <v-col class="ml-2" @click="$router.push({name: 'ParkInfo', query: {item: JSON.stringify(item)}})"> <!-- 파크인포 새로고침 해도 넘어오게 제이슨객체 스트링화-->
               <h3 class="d-flex font-weight-bold mt-2" v-text="item.parkname" style="color: #1a237e"></h3>
               <p class="d-flex mt-15" v-text="item.address"></p>
-              <p class="d-flex" v-text="item.ratings"></p>
+              <p class="d-flex">
+                <v-rating
+                  :value="Number(item.ratings)"
+                  color="warning"
+                  dense
+                  half-increments
+                  background-color="grey lighten-1"
+                  readonly
+                  size="18">
+                </v-rating>
+                <span class="grey--text text-body-1 ml-2"  >
+                  {{ item.ratings }}
+                </span>
+              </p>
               <p class="d-flex" v-text="item.distance" style="color: #bdbdbd"></p>
             </v-col>
           </v-row>
@@ -37,9 +50,9 @@
           <v-divider :key="i"></v-divider>
           </v-list-item-content>
         </v-list-item>
-        <v-lsit-item v-if="$store.getters.parks.length.toLocaleString() == 0">
+        <v-lsit-item v-if="openList.length.toLocaleString() == 0">
           <v-list-item-content>
-            <v-list-item-title>검색 결과가 없습니다.</v-list-item-title>
+            <v-list-item-title>열람목록이 없습니다.</v-list-item-title>
           </v-list-item-content>
         </v-lsit-item>
       </v-list>
@@ -58,6 +71,7 @@
 import Header from "../components/layout/Header.vue";
 import Sort from "../components/layout/Sort.vue";
 import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 export default {
   components: {
     Header: Header,
@@ -85,7 +99,10 @@ export default {
       return this.openList.slice(this.startOffset, this.endOffset);
     },
   },
-};
+methods: {
+    ...mapActions(["addMarkList"])
+  }
+}
 </script>
 
 

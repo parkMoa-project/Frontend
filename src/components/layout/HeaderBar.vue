@@ -1,5 +1,7 @@
+
+   
 <template>
-<!-- Home.vue & Search.vue 화면에 들어가야 함 -->
+<!-- Home.vue & Search.vue 화면 -->
 
 <div class="HeaderBar">
   <!-- 배경이미지 -->
@@ -29,7 +31,7 @@
   </v-btn>
   
   <v-btn icon href="/openList">
-  <v-icon large color="rgb(80, 59, 27)">mdi-format-list-bulleted-square</v-icon>
+  <v-icon large color="80, 59, 27">mdi-format-list-bulleted-square</v-icon>
   </v-btn>
 
   <!-- 검색바 -->
@@ -50,7 +52,7 @@
     </head>
     <body>
       <div class="search-box">
-        <input
+          <input
           v-bind:value="inputText"
           v-on:input="updateInput"
           type="text"
@@ -58,24 +60,28 @@
           name=""
           placeholder="검색어를 입력하세요" 
           @keyup.enter="getinfo(inputText)" 
-        />
+          />
 
-        <a class="search-btn" @click="getinfo(inputText)">
-          <i class="fas fa-search"></i>
-        </a>
-      </div>
+           <a class="search-btn" @click="getinfo(inputText)">
+            <i class="fas fa-search"></i>
+          </a>
+        </div>
     </body>
   </template>
     
   <!-- 사용자 위치 주소 아이콘 & 바 -->
-  <div class="location">
-    <!-- 아이콘 -->
-    <v-btn
-      class="ma-2" 
-      color="#212121" 
-      dark
-      @click="getLocation()">
-        <v-icon dark color="#E64A19" left size = 25>mdi-map-marker-radius</v-icon>
+    <div class="location">
+      <!-- 아이콘 -->
+      <v-btn
+        class="ma-2" 
+        color="#212121" 
+        dark
+        @click="getLocation()">
+        <v-icon dark color="#E64A19"
+                left
+                size = 25>
+                mdi-map-marker-radius
+                </v-icon>
         <!-- 바 -->
         <v-card
           class="d-flex pa-0"
@@ -85,8 +91,8 @@
           <div v-else-if="$store.state.gettingLocation">위치 가져오는 중...</div>
           <div v-else>사용자 위치 주소: {{latitude}}, {{longitude}}</div>
         </v-card>
-    </v-btn>
-  </div>
+      </v-btn>
+    </div>
 
     </v-toolbar>
   </div>
@@ -95,24 +101,23 @@
 
 <!-- 사용자 위치 가져오기 -->
 <script> 
-import { mapGetters, mapActions } from "vuex";
-
-export default {
-  data () {
-      return {
-          dialog: false,
-          inputText: "",
-      }
-  },
-  computed: { 
-      ...mapGetters(["latitude", "longitude"])
-  },
+  import { mapGetters, mapActions } from "vuex";
+  export default {
+    data () {
+        return {
+            dialog: false,
+            inputText: "",
+        }
+    },
+    computed: { 
+        ...mapGetters(["latitude", "longitude"])
+    },
   methods: {
-      ...mapActions(["getLocation", "getinfo"]),
-      updateInput: function (e) {
-        var updatedText = e.target.value
-        this.inputText = updatedText
-      },
+    ...mapActions(["getLocation", "getinfo"]),
+    updateInput: function (e) {
+      var updatedText = e.target.value
+      this.inputText = updatedText
+    },
   }
 }
 </script>
@@ -171,5 +176,7 @@ export default {
     top: 70%;
     left: 50%;
     transform: translate(-50%, -20%);
+    color: rgb(15, 75, 60);
+    color: rgb(80, 59, 27);
   }
 </style>

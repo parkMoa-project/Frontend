@@ -11,9 +11,11 @@ export default new Vuex.Store({
     {
       storage: window.sessionStorage
     })],
+
   state: {
     parks: [],
     openList: [],
+    markList: [],
     gettingLocation: false,
     error: true,
     cityHall: {
@@ -32,6 +34,10 @@ export default new Vuex.Store({
       var list = state.openList.map(x => JSON.parse(x))
       return list
     },
+    markList: (state) => {
+      var list = state.markList.map(x => JSON.parse(x))
+      return list
+    },
     latitude: (state) => { return state.currentLocation.latitude },
     longitude: (state) => { return state.currentLocation.longitude },
   },
@@ -44,7 +50,7 @@ export default new Vuex.Store({
 
     setGettingLocation(state, payload) {
       state.gettingLocation = payload
-      console.log("gettingLocation:", payload)
+      console.log("gettingLocation :", payload)
     },
 
     setLocation(state, payload) {
@@ -78,8 +84,9 @@ export default new Vuex.Store({
           latitude: "",
           longitude: "",
 
-          ratings: "★★★★☆ 4.0",
+          ratings: (Math.random() * 5).toFixed(1),
           distance: "",
+
         }
 
         park.parkname = item._source.Park_name
@@ -112,12 +119,19 @@ export default new Vuex.Store({
       if (!state.openList.includes(payload)) {
         state.openList.push(payload)
       }
+    },
+    addMarkList(state, payload) {
+      if (!state.markList.includes(payload)) {
+        state.markList.push(payload)
+      }
+      else {
+        state.markList.splice(state.markList.indexOf(payload), 1)
+      }
     }
   },
 
   actions: {
     getLocation({ commit }) {
-      //do we support geolocation
       if (!("geolocation" in navigator)) {
         commit("setError", true)
         return;
@@ -141,26 +155,22 @@ export default new Vuex.Store({
 
     getinfo({ commit }, inputText) {
       console.log(inputText)
-      var pos = {
-        latitude: null,
-        longitude: null
-      }
+      var latitude = null
+      var longitude = null
       if (this.state.error) {
-        pos.latitude = this.state.cityHall.latitude,
-          pos.longitude = this.state.cityHall.longitude
+        latitude = this.state.cityHall.latitude,
+          longitude = this.state.cityHall.longitude
       }
       else {
-        pos.latitude = this.state.currentLocation.latitude,
-          pos.longitude = this.state.currentLocation.longitude
+        latitude = this.state.currentLocation.latitude,
+          longitude = this.state.currentLocation.longitude
       }
       axios
-        .get("http://20.194.30.72:8000/parkmoa/", {
+        .get("http://20.194.30.72:8000/parkmoa", {
           params: {
             search: inputText,
-            latitude: pos.latitude,
-            longitude: pos.longitude
-            // pos: pos
-
+            latitude,
+            longitude
           }
         })
         .then((res) => {
@@ -169,7 +179,6 @@ export default new Vuex.Store({
           parkInfo = res.data.hits
           console.log("parkinfo")
           console.log(res.data.hits)
-          console.log(pos)
           commit("getinfo", parkInfo)
           router.push({ name: "Search", query: { param: inputText } }).catch(e => {
             if (e === "NavigationDuplicated")
@@ -179,29 +188,10 @@ export default new Vuex.Store({
     },
     addOpenList({ commit }, payload) {
       commit("addOpenList", payload)
+    },
+    addMarkList({ commit }, payload) {
+      commit("addMarkList", payload)
     }
   },
   modules: {},
 });
-
-// 좌표 -> 주소 카카오맵 api
-// coord2Address(x, y, callback, options)
-// 좌표 값에 해당하는 구 주소와 도로명 주소 정보를 요청한다.
-// 도로명 주소는 좌표에 따라서 표출되지 않을 수 있다.
-
-// var geocoder = new kakao.maps.services.Geocoder();
-
-// var coord = new kakao.maps.LatLng(37.56496830314491, 126.93990862062978);
-// var callback = function(result, status) {
-//     if (status === kakao.maps.services.Status.OK) {
-//         console.log(result[0].address.address_name);
-//     }
-// };
-
-// geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-// Parameters
-// x Number : x 좌표, 경위도인 경우 longitude
-// y Number : y 좌표, 경위도인 경우 latitude
-// callback Function : 검색 결과를 받을 콜백함수
-// options Object
-// input_coord Coords : 입력 좌표 체계. 기본값은 WGS84
